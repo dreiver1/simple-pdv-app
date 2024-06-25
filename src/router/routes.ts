@@ -12,7 +12,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/PointOfSale.vue'),
     children: [
       { path: 'pdv', component: () => import('pages/pointOfSalePage.vue') },
     ],

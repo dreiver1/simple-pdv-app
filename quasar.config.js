@@ -8,12 +8,14 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
+const path = require('path');
 
 const { configure } = require('quasar/wrappers');
 
 
 module.exports = configure(function (/* ctx */) {
   return {
+
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
 
@@ -84,13 +86,36 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      // https: true
-      open: true // opens browser window automatically
+      https: true,
+      server: {
+        type: 'https', // NECESSÁRIO (alternativa é tipo 'http')
+        options: {
+          // Use caminhos ABSOLUTOS ou path.join(__dirname, 'caminho/relativo')
+          key: path.join(__dirname, 'ssl/server.key'),
+          cert: path.join(__dirname, 'ssl/server.crt'),
+          // pfx: path.join(__dirname, 'ssl/server.pfx'), // opcional se você tiver um arquivo PFX
+          // ca: path.join(__dirname, 'ssl/ca.pem'), // opcional se você tiver um certificado de autoridade
+          // passphrase: 'sua-senha', // opcional se você tiver uma senha para o certificado
+        }
+      },
+      port: 8080, // ou outra porta que você prefira
+      open: true // abre o navegador automaticamente
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      config: {
+        brand: {
+          primary: '#ff9800',
+          secondary: '#ffff00',
+          accent: '#333233',
+          dark: '#090909',
+          negative: '#C10015',
+          positive: '#ffff56',
+          info: '',
+          warning: ''
+        },
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack

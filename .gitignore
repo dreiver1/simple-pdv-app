@@ -2,6 +2,9 @@
 .thumbs.db
 node_modules
 
+/ssl
+/certificate
+
 # Quasar core related directories
 .quasar
 /dist

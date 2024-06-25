@@ -1,5 +1,5 @@
 <template>
-  <q-table title="Treats" :rows="store.allCategories" :columns="columns" row-key="name" >
+  <q-table title="Treats" :rows="store.allCategories" :columns="columns" row-key="name" class="bg-accent text-white item">
     <template v-slot:top>
       <div class="row justify-between col-12 items-center">
         <div class="text-bold q-pa-md">
@@ -17,7 +17,7 @@
     </template>
   </q-table>
   <Suspense>
-    <formUpdateCategory v-if="formUpdateVisible"/>
+    <formUpdateCategory v-if="formUpdateVisible" />
   </Suspense>
 </template>
 <script>
