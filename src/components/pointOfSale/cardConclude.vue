@@ -5,7 +5,7 @@
     </q-card-section>
     <q-card-section class="item">
       <q-btn color="accent" @click="conclude()" label="menu" text-color="primary" class="q-ma-xs"/>
-      <q-btn color="primary" @click="conclude()" label="finalizar" text-color="accent" class="q-ma-xs"/>
+      <FinalizeCard/>
     </q-card-section>
   </q-card>
 </template>
@@ -14,6 +14,7 @@
 
 import { defineComponent } from 'vue'
 import { itemStore } from 'src/stores/itemStore';
+import FinalizeCard from './finalizeCard.vue';
 const store = itemStore()
 
 export default defineComponent({
@@ -25,6 +26,9 @@ export default defineComponent({
       },
       store
     }
+  },
+  components: {
+    FinalizeCard: FinalizeCard
   }
 })
 

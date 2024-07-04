@@ -46,7 +46,7 @@ export default defineComponent({
     onBeforeMount(async()=>{
       const order = await OrderStore.post()
       ItemStore.order.orderId = await order.orderId
-      await ItemStore.get()
+      await ItemStore.get(ItemStore.order.orderId)
       console.log(ItemStore.itemsOfOrder)
     })
     const columns = [

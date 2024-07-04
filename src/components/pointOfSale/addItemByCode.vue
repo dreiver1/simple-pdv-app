@@ -1,5 +1,5 @@
-<template class="reader">
-  <p v-if="code" class="text-h6 text-center q-mt-lg">
+<template>
+  <p v-if="code">
     Código Lido: {{ code }}
     <q-btn
       icon="mdi-content-copy"
@@ -177,16 +177,16 @@ export default defineComponent({
 }
 
 .video-container {
-  position: relative;
-  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
   height: 100%;
-  margin-top: 20px;
 }
 
 #video {
-  width: 100%;
+  width: 100vw;
   height: auto;
-  display: block;
 }
 
 #canvas {

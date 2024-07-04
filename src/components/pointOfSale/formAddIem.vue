@@ -1,31 +1,33 @@
 <template>
   <div class="q-pa-md item flex-container">
-    <q-btn label="Adicionar" color="primary" @click="addItem = true" />
-    <q-dialog v-model="addItem" persistent class="bg-accent flex-container">
+    <q-btn label="Adicionar" color="primary" @click="store.addItem = true" />
+    <q-dialog v-model="store.addItem" persistent class="bg-accent flex-container">
+      <addItemByCode/>
       <suspense>
-        <addItemByCode class="flex-container"/>
+        <addItemByName/>
       </suspense>
-      <addItemByName class="item"/>
     </q-dialog>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 
 import addItemByName from 'src/components/pointOfSale/addItemByName.vue'
 import addItemByCode from 'src/components/pointOfSale/addItemByCode.vue'
+import { itemStore } from 'src/stores/itemStore';
 
 
 export default defineComponent({
   name: 'formAddItem',
   setup() {
+    const store = itemStore()
     async function post() {
       console.log('post')
     }
     return {
       post,
-      addItem: ref(false),
+      store,
     };
   },
   components: {

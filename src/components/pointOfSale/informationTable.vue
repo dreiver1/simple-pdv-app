@@ -7,7 +7,7 @@
           </div>
         </q-card-section>
         <q-card-section class="full-width">
-            <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"/>
+            <q-img :src="store.product.img"/>
         </q-card-section>
       </q-card-section>
     </q-card>
@@ -29,4 +29,7 @@ export default defineComponent({
 </script>
 
 <style>
+
+
+
 </style>
