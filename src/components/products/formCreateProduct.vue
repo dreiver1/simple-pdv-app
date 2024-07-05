@@ -90,6 +90,8 @@
             type="number"
           />
 
+          <q-file outlined v-model="store.product.img" label="imagem" @update:model-value="postImage()"/>
+
           <q-input
             class="q-pa-sm"
             input-style="color: #ff9800;"
@@ -168,9 +170,16 @@ export default defineComponent({
       );
       store.product.categoryCategoryId = store.category.categoryId;
       await store.api.post(store.product);
-      store.get();
+      store.allProducts = await store.api.get();
     }
+
+    async function postImage() {
+    const imgName = await store.api.uploadImage(store.product.img)
+    store.product.imgURL = `/files/${imgName}`
+    }
+
     return {
+      postImage,
       store,
       post,
       productName,

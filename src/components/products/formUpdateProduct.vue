@@ -63,6 +63,8 @@
             :rules="[(val) => val !== null || 'Cost Price is required']"
           />
 
+          <q-file outlined v-model="store.product.img" label="imagem" @update:model-value="postImage()"/>
+
           <q-input
             input-style="color: #ff9800;"
             filled
@@ -146,12 +148,21 @@ export default defineComponent({
     const put = async () => {
       await store.api.put(store.product.productId, store.product)
       await store.get()
+      store.allProducts = await store.api.get();
     }
+
+    async function postImage() {
+    const imgName = await store.api.uploadImage(store.product.img)
+    store.product.imgURL = `/files/${imgName}`
+    }
+
     const del = async () => {
       await store.api.delete(store.product.productId)
       await store.get()
+      store.allProducts = await store.api.get();
     }
     return {
+      postImage,
       del,
       put,
       options,

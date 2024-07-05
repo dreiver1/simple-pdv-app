@@ -7,7 +7,7 @@
           </div>
         </q-card-section>
         <q-card-section class="full-width">
-            <q-img :src="store.product.img"/>
+            <q-img :src="'https://127.0.0.1:3000'+store.product.imgURL"/>
         </q-card-section>
       </q-card-section>
     </q-card>

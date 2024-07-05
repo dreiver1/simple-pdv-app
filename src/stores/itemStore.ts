@@ -32,7 +32,8 @@ const product = ref({
   discount: null,
   stockQuantity: null,
   weight: null,
-  categoryCategoryId: null
+  categoryCategoryId: null,
+  imgURL: ''
 });
 
 const itemsOfOrder = ref([{

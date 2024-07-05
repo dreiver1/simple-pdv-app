@@ -15,7 +15,9 @@ const product = ref({
     discount: null,
     stockQuantity: null,
     weight: null,
-    categoryCategoryId: null
+    categoryCategoryId: null,
+    img: '',
+    imgURL: ''
 });
 
 const category = ref({
@@ -64,7 +66,9 @@ export const productStore = defineStore('product', {
           discount: null,
           stockQuantity: null,
           weight: null,
-          categoryCategoryId: null
+          categoryCategoryId: null,
+          img: '',
+          imgURL: ''
       }
     }
   },
