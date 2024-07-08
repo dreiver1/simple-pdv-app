@@ -1,5 +1,8 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -15,6 +18,52 @@ declare module '@vue/runtime-core' {
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({ baseURL: 'https://127.0.0.1:3000' });
+
+
+api.interceptors.request.use(
+  config => {
+    const token = window.localStorage.getItem('accessToken')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  error => {
+    Promise.reject(error)
+  }
+)
+
+api.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      const refresh = window.localStorage.getItem('refreshToken')
+      try {
+        const response = await axios.post('/refreshToken', {
+          refreshToken: refresh
+        })
+        const { accessToken, refreshToken } = response.data
+
+        window.localStorage.setItem('accessToken', accessToken)
+        window.localStorage.setItem('refreshToken', refreshToken)
+
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`
+
+        return api(originalRequest)
+      } catch (err) {
+        window.localStorage.setItem('accessToken', '')
+        router.push('/login')
+        return Promise.reject(err)
+      }
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

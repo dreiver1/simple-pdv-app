@@ -17,6 +17,13 @@ const routes: RouteRecordRaw[] = [
       { path: 'pdv', component: () => import('pages/pointOfSalePage.vue') },
     ],
   },
+  {
+    path: '/',
+    component: () => import('layouts/PointOfSale.vue'),
+    children: [
+      { path: 'login', component: () => import('pages/loginPage.vue') },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it
