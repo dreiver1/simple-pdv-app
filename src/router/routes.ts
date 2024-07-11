@@ -3,30 +3,51 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/PointOfSale.vue'),
+    beforeEnter: async (to, from, next) => {
+      const token = await window.localStorage.getItem('accessToken');
+      if (token) {
+        next('/main');
+      } else {
+        next();
+      }
+    },
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') },
+      { path: '', component: () => import('pages/loginPage.vue') },
+    ],
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    beforeEnter: async (to, from, next) => {
+      const token = await window.localStorage.getItem('accessToken');
+      if (!token) {
+        next('/');
+      } else {
+        next();
+      }
+    },
+    children: [
+      { path: 'main', component: () => import('pages/IndexPage.vue') },
       { path: 'category', component: () => import('pages/categoryPage.vue') },
       { path: 'product', component: () => import('pages/ProductPage.vue') },
     ],
   },
   {
-    path: '/',
+    path: '/pdv',
     component: () => import('layouts/PointOfSale.vue'),
+    beforeEnter: async (to, from, next) => {
+      const token = await window.localStorage.getItem('accessToken');
+      if (!token) {
+        next('/');
+      } else {
+        next();
+      }
+    },
     children: [
-      { path: 'pdv', component: () => import('pages/pointOfSalePage.vue') },
+      { path: '', component: () => import('pages/pointOfSalePage.vue') },
     ],
   },
-  {
-    path: '/',
-    component: () => import('layouts/PointOfSale.vue'),
-    children: [
-      { path: 'login', component: () => import('pages/loginPage.vue') },
-    ],
-  },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

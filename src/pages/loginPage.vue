@@ -47,7 +47,7 @@ export default {
         const { accessToken, refreshToken } = res.data
         window.localStorage.setItem('accessToken', accessToken)
         window.localStorage.setItem('refreshToken', refreshToken)
-        router.push('/')
+        router.push('/main')
     }
 
     return {
