@@ -71,6 +71,12 @@ const linksList: EssentialLinkProps[] = [
     caption: 'Gerencie Categorias',
     icon: 'app_registration',
     link: '/category'
+  },
+  {
+    title: 'Usuarios',
+    caption: 'Gerencie Usuarios',
+    icon: 'person',
+    link: '/user'
   }
 ];
 

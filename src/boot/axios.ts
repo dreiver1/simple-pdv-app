@@ -38,7 +38,7 @@ api.interceptors.response.use(
   async error => {
     const originalRequest = error.config
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if  ((error.response.status === 401 || error.response.status === 403) && !originalRequest._retry)  {
       originalRequest._retry = true
 
       const refresh = window.localStorage.getItem('refreshToken')
@@ -55,8 +55,9 @@ api.interceptors.response.use(
 
         return api(originalRequest)
       } catch (err) {
-        window.localStorage.setItem('accessToken', '')
-        router.push('/login')
+        window.localStorage.removeItem('accessToken')
+        window.localStorage.removeItem('refreshToken')
+        router.push('/')
         return Promise.reject(err)
       }
     }
