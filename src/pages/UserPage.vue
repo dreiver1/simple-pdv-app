@@ -1,8 +1,8 @@
 <template>
   <q-page class="row items-center justify-evenly flex-container">
-    <formUser/>
+    <tableUser/>
   </q-page>
 </template>
 <script script setup lang="ts">
-import formUser from 'src/components/user/formUser.vue';
+import tableUser from 'src/components/user/tableUser.vue';
 </script>

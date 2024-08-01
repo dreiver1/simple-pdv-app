@@ -43,7 +43,7 @@ api.interceptors.response.use(
 
       const refresh = window.localStorage.getItem('refreshToken')
       try {
-        const response = await axios.post('/refreshToken', {
+        const response = await api.post('/login/refresh', {
           refreshToken: refresh
         })
         const { accessToken, refreshToken } = response.data
@@ -55,6 +55,7 @@ api.interceptors.response.use(
 
         return api(originalRequest)
       } catch (err) {
+        console.log(err)
         window.localStorage.removeItem('accessToken')
         window.localStorage.removeItem('refreshToken')
         router.push('/')
