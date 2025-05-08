@@ -5,7 +5,7 @@
         <div class="text-bold q-pa-md">
           CATEGORIAS
         </div>
-        <formCreateCategory />
+        <formCreateCategory @category-created="fetchCategories"/>
       </div>
     </template>
     <template v-slot:body="props">
@@ -48,11 +48,20 @@ export default defineComponent({
     const columns = [
       { name: 'name', label: 'nome', align: 'left', field: (row) => row.name, format: (val) => `${val}`, sortable: true },
     ];
+    const fetchCategories = async () => {
+      try {
+        store.allCategories = await store.api.get();
+        console.log('Categorias atualizadas!');
+      } catch (error) {
+        console.error('Erro ao atualizar categorias:', error);
+      }
+    };
     return {
       store,
       formUpdateVisible,
       onRowClick,
       columns,
+      fetchCategories,
     };
   },
   components: {

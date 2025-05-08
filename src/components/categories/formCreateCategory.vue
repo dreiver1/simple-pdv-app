@@ -76,12 +76,42 @@ export default defineComponent({
     const store = categoryStore();
 
     async function post() {
-      const parent = await store.getByName(categoryParentName.value);
+      let parent = null;
+      if(categoryParentName.value != ''){
+        parent = await store.getByName(categoryParentName.value);
+      }
+
       form.value.name = categoryName.value;
-      form.value.parentId = parent.categoryId;
+      if(parent != null){
+        form.value.parentId = parent.categoryId;
+      } else {
+        form.value.parentId = null;
+      }
+
       const data = form.value;
-      await store.api.post(data);
-      store.allCategories = await store.api.get()
+      try {
+        await store.api.post(data);
+        console.log('Categoria criada com sucesso!');
+        emit('category-created');
+      } catch (error) {
+        console.error('Erro ao criar categoria:', error);
+      }
+
+      try {
+        const response = await store.api.get();
+        if (Array.isArray(response)) {
+          store.allCategories = response;
+        } else {
+          console.error('Unexpected API response structure:', response);
+        }
+
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      }
+      form.value.name = '';
+      form.value.parentId = '';
+      categoryName.value = '';
+      categoryParentName.value = '';
     }
     return {
       post,

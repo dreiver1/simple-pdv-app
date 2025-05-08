@@ -63,20 +63,39 @@ export default defineComponent({
   name: 'formUpdateCategory',
   async setup() {
     const options = ref(stringOptions);
+
+    const resetForm = () => {
+      store.category.name = '';
+      store.parent.name = '';
+    };
+
     const put = async () => {
-      if(store.parent.name.length > 0){
-        const parent = await store.getByName(store.parent.name);
-        store.category.parentId = parent.categoryId;
+      try {
+        if (store.parent.name.length > 0) {
+          const parent = await store.getByName(store.parent.name);
+          store.category.parentId = parent.categoryId;
+        }
+        await store.api.put(store.category.categoryId, store.category);
+        store.allCategories = await store.api.get();
+        console.log('Categoria atualizada com sucesso!');
+        resetForm();
+      } catch (error) {
+        console.error('Erro ao atualizar a categoria:', error);
       }
-      await store.api.put(store.category.categoryId, store.category)
-      store.allCategories = await store.api.get()
-    }
+    };
+
     const del = async () => {
-      if(store.category.categoryId.length > 0) {
-        await store.api.delete(store.category.categoryId)
-        store.allCategories = await store.api.get()
+      try {
+        if (store.category.categoryId.length > 0) {
+          await store.api.delete(store.category.categoryId);
+          store.allCategories = await store.api.get();
+          console.log('Categoria excluída com sucesso!');
+        }
+      } catch (error) {
+        console.error('Erro ao excluir a categoria:', error);
       }
-    }
+    };
+
     return {
       del,
       put,
